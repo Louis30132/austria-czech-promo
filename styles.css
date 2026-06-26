@@ -1,0 +1,508 @@
+:root {
+  --bg: #fff7f5;
+  --paper: #ffffff;
+  --ink: #231815;
+  --subtle: #705955;
+  --line: #f0d7d2;
+  --brand: #c93f31;
+  --brand-dark: #af2f23;
+  --soft: #fff6f4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  background: #ffffff;
+  color: var(--ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.welcome {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.welcome__image,
+.welcome__veil {
+  position: absolute;
+  inset: 0;
+}
+
+.welcome__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.welcome__veil {
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0.76),
+    rgba(255, 255, 255, 0.94)
+  );
+}
+
+.welcome__content {
+  position: relative;
+  width: min(680px, calc(100% - 32px));
+  margin: 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 36px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 24px 80px rgba(180, 67, 52, 0.15);
+  backdrop-filter: blur(8px);
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.welcome__title {
+  margin: 24px 0 0;
+  font-size: clamp(40px, 7vw, 72px);
+  line-height: 1.06;
+  font-weight: 800;
+}
+
+.welcome__title-accent {
+  display: block;
+  color: var(--brand);
+}
+
+.welcome__copy {
+  margin: 20px 0 0;
+  color: var(--subtle);
+  font-size: 18px;
+  line-height: 1.9;
+}
+
+.welcome__cta {
+  margin-top: 28px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--brand);
+  color: #fff;
+  padding: 16px 30px;
+  font-size: 16px;
+  font-weight: 800;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.welcome__cta:hover {
+  background: var(--brand-dark);
+  transform: translateY(-1px);
+}
+
+.hidden {
+  display: none;
+}
+
+.page {
+  padding: 40px 20px 56px;
+}
+
+.shell {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+}
+
+.headline {
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 24px;
+}
+
+.headline__label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #a84a3b;
+}
+
+.headline__title {
+  margin: 10px 0 0;
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1.12;
+  font-weight: 800;
+}
+
+.cards {
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 960px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+.promo-card {
+  overflow: hidden;
+  border: 1px solid #edd8d3;
+  border-radius: 30px;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(168, 62, 48, 0.08);
+  transform: scale(1);
+  transition:
+    transform 0.9s ease,
+    box-shadow 0.9s ease,
+    border-color 0.4s ease;
+}
+
+.promo-card.is-active {
+  transform: scale(1.02);
+  box-shadow: 0 28px 80px rgba(168, 62, 48, 0.18);
+}
+
+.promo-card__media {
+  position: relative;
+}
+
+.promo-card__image {
+  height: 280px;
+  object-fit: cover;
+  transition: height 0.9s ease;
+}
+
+.promo-card.is-active .promo-card__image {
+  height: 320px;
+}
+
+.promo-card__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, rgba(28, 16, 15, 0.2));
+}
+
+.mood-badge {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.mood-badge--urgent {
+  background: var(--brand);
+  color: #fff;
+}
+
+.mood-badge--hot {
+  background: #fff0ec;
+  color: var(--brand);
+}
+
+.promo-card__body {
+  padding: 22px 22px 24px;
+}
+
+.promo-card__title {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 34px);
+  line-height: 1.18;
+  font-weight: 800;
+}
+
+.promo-card__summary {
+  margin: 12px 0 0;
+  color: var(--subtle);
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.promo-card__expand {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.9s ease,
+    opacity 0.8s ease,
+    margin-top 0.9s ease;
+  margin-top: 0;
+}
+
+.promo-card.is-active .promo-card__expand {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 24px;
+}
+
+.promo-card__expand-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.feature-grid {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.feature {
+  border-radius: 22px;
+  background: var(--soft);
+  padding: 16px;
+}
+
+.feature__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.feature__detail {
+  margin: 8px 0 0;
+  color: #5f4844;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.departure-section {
+  margin-top: 24px;
+}
+
+.departure-section__title {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #b64739;
+}
+
+.departure-list {
+  display: grid;
+  gap: 12px;
+}
+
+.departure {
+  border: 1px solid #edd8d3;
+  border-radius: 24px;
+  background: #fff;
+  padding: 18px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.departure:hover {
+  transform: translateY(-1px);
+}
+
+.departure.is-selected {
+  box-shadow: var(--brand-shadow, 0 12px 28px rgba(201, 63, 49, 0.14));
+  border-color: var(--brand-border, #edd8d3);
+  background: var(--brand-bg, #fff);
+}
+
+.departure__grid {
+  display: grid;
+  gap: 14px;
+}
+
+@media (min-width: 840px) {
+  .departure__grid {
+    grid-template-columns: 1fr 1fr auto auto;
+    align-items: center;
+  }
+}
+
+.departure__date {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.departure__code {
+  margin: 6px 0 0;
+  color: #7a635d;
+  font-size: 14px;
+}
+
+.airline-badge,
+.offer-badge {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.airline-badge {
+  margin-top: 12px;
+}
+
+.offer-badge {
+  background: var(--brand);
+  color: #fff;
+}
+
+.offer-text {
+  margin: 10px 0 0;
+  color: var(--brand);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.price-box {
+  border-radius: 22px;
+  background: #fffaf7;
+  padding: 14px 18px;
+  text-align: center;
+}
+
+.price-box__label {
+  margin: 0;
+  color: #8a6d67;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.price-box__value {
+  margin: 8px 0 0;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.cta-link {
+  display: inline-flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 14px 22px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  transition: filter 0.25s ease, transform 0.25s ease;
+}
+
+.cta-link:hover {
+  filter: brightness(0.96);
+  transform: translateY(-1px);
+}
+
+.theme-ci {
+  --brand-bg: linear-gradient(135deg, #fff9fc, #fff0f6);
+  --brand-border: #efcade;
+  --brand-shadow: 0 12px 28px rgba(179, 59, 115, 0.14);
+  --airline-bg: #fff0f6;
+  --airline-fg: #b33b73;
+  --cta-bg: #b33b73;
+}
+
+.theme-br {
+  --brand-bg: linear-gradient(135deg, #f9fffb, #edf8f1);
+  --brand-border: #b8dcc9;
+  --brand-shadow: 0 12px 28px rgba(31, 107, 69, 0.14);
+  --airline-bg: #edf5ef;
+  --airline-fg: #1f6b45;
+  --cta-bg: #1f6b45;
+}
+
+.theme-jx {
+  --brand-bg: linear-gradient(135deg, #fffaf2, #f6efe5);
+  --brand-border: #d9c7a7;
+  --brand-shadow: 0 12px 28px rgba(121, 97, 61, 0.16);
+  --airline-bg: #f5efe6;
+  --airline-fg: #79613d;
+  --cta-bg: #6f5a3a;
+}
+
+.theme-other {
+  --brand-bg: #fff;
+  --brand-border: #edd8d3;
+  --brand-shadow: 0 12px 28px rgba(201, 63, 49, 0.14);
+  --airline-bg: #fff0ec;
+  --airline-fg: #c93f31;
+  --cta-bg: #c93f31;
+}
+
+.theme-ci .airline-badge,
+.theme-br .airline-badge,
+.theme-jx .airline-badge,
+.theme-other .airline-badge {
+  background: var(--airline-bg);
+  color: var(--airline-fg);
+}
+
+.theme-ci .cta-link,
+.theme-br .cta-link,
+.theme-jx .cta-link,
+.theme-other .cta-link {
+  background: var(--cta-bg);
+}
+
+@media (max-width: 639px) {
+  .welcome__content {
+    padding: 32px 24px;
+  }
+
+  .welcome__copy {
+    font-size: 16px;
+  }
+
+  .promo-card__body {
+    padding: 18px;
+  }
+
+  .promo-card__image,
+  .promo-card.is-active .promo-card__image {
+    height: 240px;
+  }
+
+  .departure__date {
+    font-size: 24px;
+  }
+
+  .price-box__value {
+    font-size: 24px;
+  }
+}
