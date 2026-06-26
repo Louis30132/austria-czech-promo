@@ -1,5 +1,5 @@
 const SITE_CONFIG = {
-  gaMeasurementId: "",
+  gaMeasurementId: "G-C68H7ZJR8W",
 };
 
 const groups = [
