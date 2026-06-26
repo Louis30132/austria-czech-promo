@@ -12,22 +12,10 @@ const groups = [
     mood: "即將滿團",
     moodClass: "mood-badge--urgent",
     features: [
-      {
-        title: "國王湖遊船",
-        detail: "搭乘遊船漫遊高山湖泊，欣賞清澈絕美湖景。",
-      },
-      {
-        title: "哈修塔特",
-        detail: "探訪奧地利最美小鎮，飽覽如詩如畫的風光。",
-      },
-      {
-        title: "童話庫倫洛夫",
-        detail: "漫步捷克遺產小鎮，感受中世紀的浪漫風情。",
-      },
-      {
-        title: "維也納雙宮",
-        detail: "遊覽熊布朗宮與美景宮，見證昔日帝國輝煌。",
-      },
+      { title: "國王湖遊船", detail: "搭乘遊船漫遊高山湖泊，欣賞清澈絕美湖景。" },
+      { title: "哈修塔特", detail: "探訪奧地利最美小鎮，飽覽如詩如畫的風光。" },
+      { title: "童話庫倫洛夫", detail: "漫步捷克遺產小鎮，感受中世紀的浪漫風情。" },
+      { title: "維也納雙宮", detail: "遊覽熊布朗宮與美景宮，見證昔日帝國輝煌。" },
     ],
     departures: [
       {
@@ -62,22 +50,10 @@ const groups = [
     mood: "熱門檔期",
     moodClass: "mood-badge--hot",
     features: [
-      {
-        title: "哈修塔特與鹽湖",
-        detail: "探訪真善美拍攝地，飽覽絕美湖光山色。",
-      },
-      {
-        title: "童話庫倫洛夫",
-        detail: "走入世界遺產小鎮，感受中古世紀風情。",
-      },
-      {
-        title: "薩爾茲堡纜車",
-        detail: "搭乘城堡山纜車，居高臨下俯瞰城市美景。",
-      },
-      {
-        title: "布拉格遊船百匯",
-        detail: "乘船漫遊伏爾塔瓦河，悠閒享用特色美食。",
-      },
+      { title: "哈修塔特與鹽湖", detail: "探訪真善美拍攝地，飽覽絕美湖光山色。" },
+      { title: "童話庫倫洛夫", detail: "走入世界遺產小鎮，感受中古世紀風情。" },
+      { title: "薩爾茲堡纜車", detail: "搭乘城堡山纜車，居高臨下俯瞰城市美景。" },
+      { title: "布拉格遊船百匯", detail: "乘船漫遊伏爾塔瓦河，悠閒享用特色美食。" },
     ],
     departures: [
       {
@@ -106,9 +82,7 @@ const groups = [
 ];
 
 function setupAnalytics() {
-  if (!SITE_CONFIG.gaMeasurementId) {
-    return;
-  }
+  if (!SITE_CONFIG.gaMeasurementId) return;
 
   const script = document.createElement("script");
   script.async = true;
@@ -125,10 +99,9 @@ function setupAnalytics() {
 }
 
 function trackEvent(name, params = {}) {
-  if (typeof window.gtag !== "function") {
-    return;
+  if (typeof window.gtag === "function") {
+    window.gtag("event", name, params);
   }
-  window.gtag("event", name, params);
 }
 
 function getAirlineBrand(code) {
@@ -144,30 +117,34 @@ function getAirlineBrand(code) {
   return { theme: "theme-other", name: "精選航班" };
 }
 
-function renderDeparture(groupId, option, index, selectedIndex) {
+function renderDeparture(groupId, groupTitle, option, index, selectedIndex) {
   const brand = getAirlineBrand(option.code);
   return `
-    <div class="departure ${brand.theme} ${selectedIndex === index ? "is-selected" : ""}" data-group="${groupId}" data-index="${index}" tabindex="0" role="button" aria-label="${option.date} ${option.code}">
-      <div class="departure__grid">
-        <div class="departure__panel departure__panel--info">
-          <div class="departure__badges">
+    <div class="departure ${brand.theme} ${selectedIndex === index ? "is-selected" : ""}" data-group="${groupId}" data-index="${index}" tabindex="0" role="button" aria-label="${groupTitle} ${option.date}">
+      <div class="ticket-shell">
+        <div class="ticket-main">
+          <div class="ticket-badges">
             <span class="airline-badge">${brand.name}</span>
             <span class="offer-badge">限時優惠</span>
           </div>
-          <p class="departure__date">${option.date}</p>
-          <p class="departure__code">團號 ${option.code}</p>
-        </div>
-        <div class="departure__panel departure__panel--offer">
-          <p class="departure__panel-label">優惠內容</p>
-          <p class="offer-text">${option.offer}</p>
-        </div>
-        <div class="departure__panel departure__panel--price">
-          <div class="price-box">
-            <p class="price-box__label">直售價</p>
-            <p class="price-box__value">${option.price}</p>
+          <div class="ticket-grid">
+            <section class="ticket-panel ticket-panel--date">
+              <p class="ticket-panel__label">出發日期</p>
+              <p class="departure__date">${option.date}</p>
+              <p class="departure__code">團號 ${option.code}</p>
+            </section>
+            <section class="ticket-panel ticket-panel--offer">
+              <p class="ticket-panel__label">優惠內容</p>
+              <p class="offer-text">${option.offer}</p>
+            </section>
+            <section class="ticket-panel ticket-panel--price">
+              <p class="price-box__label">直售價</p>
+              <p class="price-box__value">${option.price}</p>
+            </section>
           </div>
         </div>
-        <div class="departure__cell departure__cell--cta">
+        <div class="ticket-stub">
+          <span class="ticket-stub__hint">Boarding</span>
           <a class="cta-link" href="${option.url}" target="_blank" rel="noreferrer" data-open-url="${option.url}" data-open-code="${option.code}">查看行程</a>
         </div>
       </div>
@@ -204,7 +181,9 @@ function renderCard(group) {
               <p class="departure-section__title">出發日期與優惠</p>
               <div class="departure-list" data-list="${group.id}">
                 ${group.departures
-                  .map((option, index) => renderDeparture(group.id, option, index, 0))
+                  .map((option, index) =>
+                    renderDeparture(group.id, group.title, option, index, 0),
+                  )
                   .join("")}
               </div>
             </section>
@@ -220,7 +199,7 @@ function renderDepartures(groupId, selectedIndex) {
   const list = document.querySelector(`[data-list="${groupId}"]`);
   list.innerHTML = group.departures
     .map((option, optionIndex) =>
-      renderDeparture(groupId, option, optionIndex, selectedIndex),
+      renderDeparture(groupId, group.title, option, optionIndex, selectedIndex),
     )
     .join("");
   bindDepartureClicks();
@@ -341,9 +320,7 @@ function renderPage() {
     welcome.classList.add("hidden");
     mainPage.classList.remove("hidden");
     window.scrollTo(0, 0);
-    trackEvent("enter_gate", {
-      section: "welcome",
-    });
+    trackEvent("enter_gate", { section: "welcome" });
   });
 
   bindCardInteractions();

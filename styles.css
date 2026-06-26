@@ -1,6 +1,5 @@
 :root {
   --bg: #fff7f5;
-  --paper: #ffffff;
   --ink: #231815;
   --subtle: #705955;
   --line: #f0d7d2;
@@ -332,14 +331,14 @@ button {
 
 .departure-list {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 .departure {
-  border: 1px solid #edd8d3;
-  border-radius: 24px;
+  border: 1px solid var(--brand-border, #edd8d3);
+  border-radius: 28px;
   background: var(--brand-bg, #fff);
-  padding: 16px;
+  box-shadow: var(--brand-shadow, 0 12px 28px rgba(201, 63, 49, 0.14));
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
@@ -348,98 +347,35 @@ button {
 }
 
 .departure.is-selected {
-  box-shadow: var(--brand-shadow-strong, 0 16px 36px rgba(201, 63, 49, 0.18));
-  border-color: var(--brand-border, #edd8d3);
   background: var(--brand-bg-strong, var(--brand-bg, #fff));
+  box-shadow: var(--brand-shadow-strong, 0 18px 42px rgba(201, 63, 49, 0.18));
 }
 
-.departure__grid {
+.ticket-shell {
   display: grid;
-  gap: 12px;
+  gap: 0;
+  overflow: hidden;
+  border-radius: 28px;
 }
 
-@media (min-width: 560px) {
-  .departure__grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: stretch;
-  }
-
-  .departure__panel--price,
-  .departure__cell--cta {
-    grid-column: auto;
-  }
+.ticket-main {
+  padding: 18px;
 }
 
-@media (min-width: 1160px) {
-  .departure__grid {
-    grid-template-columns: minmax(190px, 1.05fr) minmax(150px, 0.9fr) minmax(180px, 0.95fr) minmax(120px, 140px);
-  }
-}
-
-.departure__panel {
-  min-width: 0;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.82);
-  padding: 14px;
-}
-
-.departure__panel--info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.departure__panel--offer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.departure__panel--price .price-box {
-  height: 100%;
-}
-
-.departure__panel-label {
-  margin: 0;
-  color: #8a6d67;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.departure__badges {
+.ticket-badges {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 12px;
-}
-
-.departure__date {
-  margin: 0;
-  font-size: clamp(18px, 2.4vw, 22px);
-  font-weight: 800;
-  line-height: 1.15;
-  word-break: keep-all;
-}
-
-.departure__code {
-  margin: 6px 0 0;
-  color: #7a635d;
-  font-size: 12px;
+  margin-bottom: 14px;
 }
 
 .airline-badge,
 .offer-badge {
   display: inline-flex;
   border-radius: 999px;
-  padding: 5px 10px;
+  padding: 6px 11px;
   font-size: 12px;
   font-weight: 800;
-}
-
-.airline-badge {
-  margin-top: 10px;
 }
 
 .offer-badge {
@@ -447,24 +383,20 @@ button {
   color: #fff;
 }
 
-.offer-text {
-  margin: 8px 0 0;
-  color: var(--brand);
-  font-size: clamp(14px, 1.9vw, 17px);
-  font-weight: 800;
-  line-height: 1.4;
+.ticket-grid {
+  display: grid;
+  gap: 12px;
 }
 
-.price-box {
+.ticket-panel {
+  min-width: 0;
   border-radius: 22px;
-  background: rgba(255, 250, 247, 0.95);
-  padding: 12px 14px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  background: #ffffff;
+  border: 1px solid rgba(145, 111, 104, 0.08);
+  padding: 16px;
 }
 
+.ticket-panel__label,
 .price-box__label {
   margin: 0;
   color: #8a6d67;
@@ -474,10 +406,75 @@ button {
   text-transform: uppercase;
 }
 
-.price-box__value {
-  margin: 6px 0 0;
-  font-size: clamp(18px, 2.2vw, 22px);
+.departure__date {
+  margin: 10px 0 0;
+  font-size: clamp(24px, 4vw, 32px);
   font-weight: 800;
+  line-height: 1.08;
+  word-break: keep-all;
+  color: #231815;
+}
+
+.departure__code {
+  margin: 8px 0 0;
+  color: #6d5650;
+  font-size: 14px;
+}
+
+.offer-text {
+  margin: 10px 0 0;
+  color: var(--brand);
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: 800;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.price-box__value {
+  margin: 10px 0 0;
+  font-size: clamp(24px, 3.6vw, 34px);
+  font-weight: 800;
+  line-height: 1.08;
+  color: #231815;
+}
+
+.ticket-stub {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  align-content: center;
+  justify-items: stretch;
+  padding: 16px 18px 18px;
+  background: rgba(255, 255, 255, 0.18);
+  border-top: 2px dashed rgba(92, 73, 68, 0.18);
+}
+
+.ticket-stub::before,
+.ticket-stub::after {
+  content: "";
+  position: absolute;
+  top: -13px;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.ticket-stub::before {
+  left: -12px;
+}
+
+.ticket-stub::after {
+  right: -12px;
+}
+
+.ticket-stub__hint {
+  display: inline-block;
+  color: rgba(72, 53, 48, 0.62);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
 .cta-link {
@@ -489,19 +486,10 @@ button {
   padding: 12px 18px;
   width: 100%;
   color: #fff;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
+  background: var(--cta-bg, var(--brand));
   transition: filter 0.25s ease, transform 0.25s ease;
-}
-
-.departure__cell--cta {
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-}
-
-.departure__cell--cta .cta-link {
-  align-self: stretch;
 }
 
 .cta-link:hover {
@@ -509,11 +497,32 @@ button {
   transform: translateY(-1px);
 }
 
+@media (min-width: 640px) {
+  .ticket-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ticket-panel--price {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 900px) {
+  .ticket-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: stretch;
+  }
+
+  .ticket-panel--price {
+    grid-column: 1 / -1;
+  }
+}
+
 .theme-ci {
-  --brand-bg: linear-gradient(135deg, #fff6fb, #ffe7f3);
-  --brand-bg-strong: linear-gradient(135deg, #fff1f8, #ffddec);
+  --brand-bg: #fff0f8;
+  --brand-bg-strong: #ffe6f2;
   --brand-border: #efcade;
-  --brand-shadow: 0 12px 28px rgba(179, 59, 115, 0.14);
+  --brand-shadow: 0 12px 28px rgba(179, 59, 115, 0.1);
   --brand-shadow-strong: 0 18px 42px rgba(179, 59, 115, 0.18);
   --airline-bg: #fff0f6;
   --airline-fg: #b33b73;
@@ -521,10 +530,10 @@ button {
 }
 
 .theme-br {
-  --brand-bg: linear-gradient(135deg, #f6fff9, #e4f7ea);
-  --brand-bg-strong: linear-gradient(135deg, #effdf4, #d9f0e2);
+  --brand-bg: #eefbf2;
+  --brand-bg-strong: #e3f4e8;
   --brand-border: #b8dcc9;
-  --brand-shadow: 0 12px 28px rgba(31, 107, 69, 0.14);
+  --brand-shadow: 0 12px 28px rgba(31, 107, 69, 0.1);
   --brand-shadow-strong: 0 18px 42px rgba(31, 107, 69, 0.18);
   --airline-bg: #edf5ef;
   --airline-fg: #1f6b45;
@@ -532,10 +541,10 @@ button {
 }
 
 .theme-jx {
-  --brand-bg: linear-gradient(135deg, #fffbf4, #f3ebde);
-  --brand-bg-strong: linear-gradient(135deg, #fff7ed, #ede1cd);
+  --brand-bg: #faf4ea;
+  --brand-bg-strong: #f0e6d8;
   --brand-border: #d9c7a7;
-  --brand-shadow: 0 12px 28px rgba(121, 97, 61, 0.16);
+  --brand-shadow: 0 12px 28px rgba(121, 97, 61, 0.11);
   --brand-shadow-strong: 0 18px 42px rgba(121, 97, 61, 0.2);
   --airline-bg: #f5efe6;
   --airline-fg: #79613d;
@@ -543,10 +552,10 @@ button {
 }
 
 .theme-other {
-  --brand-bg: linear-gradient(135deg, #fff9f7, #fff0ec);
-  --brand-bg-strong: linear-gradient(135deg, #fff5f1, #ffe7df);
+  --brand-bg: #fff4ef;
+  --brand-bg-strong: #ffe9df;
   --brand-border: #edd8d3;
-  --brand-shadow: 0 12px 28px rgba(201, 63, 49, 0.14);
+  --brand-shadow: 0 12px 28px rgba(201, 63, 49, 0.1);
   --brand-shadow-strong: 0 18px 42px rgba(201, 63, 49, 0.18);
   --airline-bg: #fff0ec;
   --airline-fg: #c93f31;
@@ -559,13 +568,6 @@ button {
 .theme-other .airline-badge {
   background: var(--airline-bg);
   color: var(--airline-fg);
-}
-
-.theme-ci .cta-link,
-.theme-br .cta-link,
-.theme-jx .cta-link,
-.theme-other .cta-link {
-  background: var(--cta-bg);
 }
 
 @media (max-width: 639px) {
@@ -581,42 +583,24 @@ button {
     padding: 18px;
   }
 
-  .departure {
+  .ticket-main,
+  .ticket-stub {
     padding: 16px;
   }
 
-  .departure__grid {
-    gap: 10px;
-  }
-
-  .departure__panel {
-    padding: 12px;
+  .ticket-panel {
+    padding: 14px;
   }
 
   .departure__date {
-    font-size: 17px;
-  }
-
-  .departure__code {
-    font-size: 13px;
+    font-size: 26px;
   }
 
   .offer-text {
-    font-size: 14px;
-    line-height: 1.45;
-  }
-
-  .price-box {
-    padding: 12px 14px;
-  }
-
-  .price-box__value {
     font-size: 18px;
   }
 
-  .cta-link {
-    min-height: 48px;
-    padding: 12px 16px;
-    font-size: 14px;
+  .price-box__value {
+    font-size: 24px;
   }
 }
