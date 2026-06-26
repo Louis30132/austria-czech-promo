@@ -1,3 +1,7 @@
+const SITE_CONFIG = {
+  gaMeasurementId: "",
+};
+
 const groups = [
   {
     id: "king-lake-summer-10d",
@@ -101,6 +105,32 @@ const groups = [
   },
 ];
 
+function setupAnalytics() {
+  if (!SITE_CONFIG.gaMeasurementId) {
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${SITE_CONFIG.gaMeasurementId}`;
+  document.head.appendChild(script);
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() {
+    window.dataLayer.push(arguments);
+  };
+
+  window.gtag("js", new Date());
+  window.gtag("config", SITE_CONFIG.gaMeasurementId);
+}
+
+function trackEvent(name, params = {}) {
+  if (typeof window.gtag !== "function") {
+    return;
+  }
+  window.gtag("event", name, params);
+}
+
 function getAirlineBrand(code) {
   if (code.includes("JX")) {
     return { theme: "theme-jx", name: "星宇航空" };
@@ -119,20 +149,24 @@ function renderDeparture(groupId, option, index, selectedIndex) {
   return `
     <div class="departure ${brand.theme} ${selectedIndex === index ? "is-selected" : ""}" data-group="${groupId}" data-index="${index}" tabindex="0" role="button" aria-label="${option.date} ${option.code}">
       <div class="departure__grid">
-        <div>
+        <div class="departure__cell departure__cell--primary">
           <p class="departure__date">${option.date}</p>
           <p class="departure__code">團號 ${option.code}</p>
           <span class="airline-badge">${brand.name}</span>
         </div>
-        <div>
+        <div class="departure__cell">
           <span class="offer-badge">限時優惠</span>
           <p class="offer-text">${option.offer}</p>
         </div>
-        <div class="price-box">
-          <p class="price-box__label">直售價</p>
-          <p class="price-box__value">${option.price}</p>
+        <div class="departure__cell">
+          <div class="price-box">
+            <p class="price-box__label">直售價</p>
+            <p class="price-box__value">${option.price}</p>
+          </div>
         </div>
-        <a class="cta-link" href="${option.url}" target="_blank" rel="noreferrer">查看行程</a>
+        <div class="departure__cell departure__cell--cta">
+          <a class="cta-link" href="${option.url}" target="_blank" rel="noreferrer" data-open-url="${option.url}" data-open-code="${option.code}">查看行程</a>
+        </div>
       </div>
     </div>
   `;
@@ -178,50 +212,58 @@ function renderCard(group) {
   `;
 }
 
-function renderPage() {
-  const app = document.getElementById("app");
-  app.innerHTML = `
-    <section class="welcome" id="welcome">
-      <img class="welcome__image" src="./assets/king-lake-summer-10d.png" alt="奧捷風景">
-      <div class="welcome__veil"></div>
-      <div class="welcome__content">
-        <p class="eyebrow">Boarding Soon</p>
-        <h1 class="welcome__title">
-          這裡
-          <span class="welcome__title-accent">只放奧捷最值得推的團型</span>
-        </h1>
-        <p class="welcome__copy">
-          先讓客人被畫面吸住，再用檔期、優惠與航空品牌，把他穩穩推進行程頁。
-        </p>
-        <button class="welcome__cta" id="enter-site">開始查看</button>
-      </div>
-    </section>
+function renderDepartures(groupId, selectedIndex) {
+  const group = groups.find((item) => item.id === groupId);
+  const list = document.querySelector(`[data-list="${groupId}"]`);
+  list.innerHTML = group.departures
+    .map((option, optionIndex) =>
+      renderDeparture(groupId, option, optionIndex, selectedIndex),
+    )
+    .join("");
+  bindDepartureClicks();
+}
 
-    <main class="page hidden" id="main-page">
-      <div class="shell">
-        <header class="headline">
-          <p class="headline__label">To：合作夥伴與VIP</p>
-          <h1 class="headline__title">SUBJECT: 航班告急！最後保留席釋出</h1>
-        </header>
-        <section class="cards">
-          ${groups.map(renderCard).join("")}
-        </section>
-      </div>
-    </main>
-  `;
+function bindDepartureClicks() {
+  document.querySelectorAll(".departure").forEach((button) => {
+    button.addEventListener("click", () => {
+      const groupId = button.dataset.group;
+      const index = Number(button.dataset.index);
+      const group = groups.find((item) => item.id === groupId);
+      const selected = group.departures[index];
+      renderDepartures(groupId, index);
+      trackEvent("select_departure", {
+        group_id: groupId,
+        group_title: group.title,
+        departure_code: selected.code,
+        departure_date: selected.date,
+      });
+    });
 
-  const welcome = document.getElementById("welcome");
-  const mainPage = document.getElementById("main-page");
-  const enterButton = document.getElementById("enter-site");
-  const cards = [...document.querySelectorAll("[data-card]")];
-
-  enterButton.addEventListener("click", () => {
-    welcome.classList.add("hidden");
-    mainPage.classList.remove("hidden");
-    window.scrollTo(0, 0);
+    button.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        button.click();
+      }
+    });
   });
 
+  document.querySelectorAll(".cta-link").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.stopPropagation();
+      trackEvent("open_itinerary", {
+        departure_code: link.dataset.openCode,
+        itinerary_url: link.dataset.openUrl,
+      });
+    });
+  });
+}
+
+function bindCardInteractions() {
+  const cards = [...document.querySelectorAll("[data-card]")];
+
   cards.forEach((card) => {
+    const group = groups.find((item) => item.id === card.dataset.card);
+
     const activate = () => {
       cards.forEach((item) => item.classList.remove("is-active"));
       card.classList.add("is-active");
@@ -239,34 +281,71 @@ function renderPage() {
       if (event.target.closest(".departure") || event.target.closest(".cta-link")) {
         return;
       }
-      card.classList.toggle("is-active");
-    });
-  });
-
-  bindDepartureClicks();
-}
-
-function bindDepartureClicks() {
-  document.querySelectorAll(".departure").forEach((button) => {
-    button.addEventListener("click", () => {
-      const groupId = button.dataset.group;
-      const index = Number(button.dataset.index);
-      const group = groups.find((item) => item.id === groupId);
-      const list = document.querySelector(`[data-list="${groupId}"]`);
-      list.innerHTML = group.departures
-        .map((option, optionIndex) =>
-          renderDeparture(groupId, option, optionIndex, index),
-        )
-        .join("");
-      bindDepartureClicks();
-    });
-    button.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        button.click();
+      const nextState = !card.classList.contains("is-active");
+      cards.forEach((item) => item.classList.remove("is-active"));
+      if (nextState) {
+        card.classList.add("is-active");
+        trackEvent("expand_group", {
+          group_id: group.id,
+          group_title: group.title,
+        });
       }
     });
   });
 }
 
+function renderPage() {
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    <section class="welcome" id="welcome">
+      <img class="welcome__image" src="./assets/king-lake-summer-10d.png" alt="奧捷風景">
+      <div class="welcome__veil"></div>
+      <div class="welcome__content">
+        <p class="eyebrow">Boarding Soon</p>
+        <h1 class="welcome__title">
+          情緒一定要有出口
+          <span class="welcome__title-accent">所以我在登機口</span>
+        </h1>
+        <p class="welcome__copy">
+          這裡
+          <span class="welcome__copy-accent">只放奧捷最值得推的團型</span>
+        </p>
+        <button class="welcome__cta" id="enter-site">前往登機口</button>
+      </div>
+    </section>
+
+    <main class="page hidden" id="main-page">
+      <div class="shell">
+        <header class="headline">
+          <p class="headline__label">To：合作夥伴與VIP</p>
+          <h1 class="headline__title">
+            航班告急！
+            <span class="headline__accent">最後保留席釋出</span>
+          </h1>
+        </header>
+        <section class="cards">
+          ${groups.map(renderCard).join("")}
+        </section>
+      </div>
+    </main>
+  `;
+
+  const welcome = document.getElementById("welcome");
+  const mainPage = document.getElementById("main-page");
+  const enterButton = document.getElementById("enter-site");
+
+  enterButton.addEventListener("click", () => {
+    welcome.classList.add("hidden");
+    mainPage.classList.remove("hidden");
+    window.scrollTo(0, 0);
+    trackEvent("enter_gate", {
+      section: "welcome",
+    });
+  });
+
+  bindCardInteractions();
+  bindDepartureClicks();
+}
+
+setupAnalytics();
 renderPage();

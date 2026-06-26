@@ -71,7 +71,7 @@ button {
 
 .welcome__content {
   position: relative;
-  width: min(680px, calc(100% - 32px));
+  width: min(720px, calc(100% - 32px));
   margin: 0 auto;
   border: 1px solid var(--line);
   border-radius: 36px;
@@ -106,8 +106,14 @@ button {
 .welcome__copy {
   margin: 20px 0 0;
   color: var(--subtle);
-  font-size: 18px;
-  line-height: 1.9;
+  font-size: 22px;
+  line-height: 1.8;
+  font-weight: 700;
+}
+
+.welcome__copy-accent {
+  display: block;
+  color: var(--ink);
 }
 
 .welcome__cta {
@@ -162,6 +168,10 @@ button {
   font-weight: 800;
 }
 
+.headline__accent {
+  color: var(--brand);
+}
+
 .cards {
   display: grid;
   gap: 24px;
@@ -185,6 +195,7 @@ button {
     transform 0.9s ease,
     box-shadow 0.9s ease,
     border-color 0.4s ease;
+  will-change: transform;
 }
 
 .promo-card.is-active {
@@ -194,16 +205,20 @@ button {
 
 .promo-card__media {
   position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
 }
 
 .promo-card__image {
-  height: 280px;
+  height: 100%;
   object-fit: cover;
-  transition: height 0.9s ease;
+  transition: transform 0.9s ease;
+  transform: scale(1.001);
+  backface-visibility: hidden;
 }
 
 .promo-card.is-active .promo-card__image {
-  height: 320px;
+  transform: scale(1.04);
 }
 
 .promo-card__shade {
@@ -343,18 +358,33 @@ button {
   gap: 14px;
 }
 
-@media (min-width: 840px) {
+@media (min-width: 560px) {
   .departure__grid {
-    grid-template-columns: 1fr 1fr auto auto;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
     align-items: center;
+  }
+
+  .departure__cell--cta {
+    grid-column: 2;
+  }
+}
+
+@media (min-width: 1160px) {
+  .departure__grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr) minmax(180px, 0.9fr) auto;
+  }
+
+  .departure__cell--cta {
+    grid-column: auto;
   }
 }
 
 .departure__date {
   margin: 0;
-  font-size: 30px;
+  font-size: clamp(24px, 4vw, 30px);
   font-weight: 800;
   line-height: 1.1;
+  word-break: keep-all;
 }
 
 .departure__code {
@@ -407,7 +437,7 @@ button {
 
 .price-box__value {
   margin: 8px 0 0;
-  font-size: 28px;
+  font-size: clamp(24px, 4vw, 28px);
   font-weight: 800;
 }
 
@@ -418,6 +448,7 @@ button {
   justify-content: center;
   border-radius: 999px;
   padding: 14px 22px;
+  width: 100%;
   color: #fff;
   font-size: 15px;
   font-weight: 800;
@@ -486,23 +517,10 @@ button {
   }
 
   .welcome__copy {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .promo-card__body {
     padding: 18px;
-  }
-
-  .promo-card__image,
-  .promo-card.is-active .promo-card__image {
-    height: 240px;
-  }
-
-  .departure__date {
-    font-size: 24px;
-  }
-
-  .price-box__value {
-    font-size: 24px;
   }
 }
