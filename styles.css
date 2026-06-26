@@ -363,11 +363,24 @@ button {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: stretch;
   }
+
+  .departure__panel--price {
+    grid-column: 1 / -1;
+  }
+
+  .departure__cell--cta {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (min-width: 1160px) {
   .departure__grid {
     grid-template-columns: minmax(190px, 1.05fr) minmax(150px, 0.9fr) minmax(180px, 0.95fr) minmax(120px, 140px);
+  }
+
+  .departure__panel--price,
+  .departure__cell--cta {
+    grid-column: auto;
   }
 }
 
@@ -492,6 +505,7 @@ button {
 .departure__cell--cta {
   display: flex;
   align-items: stretch;
+  justify-content: stretch;
 }
 
 .cta-link:hover {
