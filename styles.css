@@ -360,7 +360,7 @@ button {
 
 @media (min-width: 560px) {
   .departure__grid {
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
     align-items: center;
   }
 
@@ -371,7 +371,7 @@ button {
 
 @media (min-width: 1160px) {
   .departure__grid {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr) minmax(180px, 0.9fr) auto;
+    grid-template-columns: minmax(170px, 0.95fr) minmax(150px, 0.8fr) minmax(170px, 0.85fr) minmax(112px, 132px);
   }
 
   .departure__cell--cta {
@@ -381,7 +381,7 @@ button {
 
 .departure__date {
   margin: 0;
-  font-size: clamp(18px, 3.2vw, 26px);
+  font-size: clamp(16px, 2.2vw, 18px);
   font-weight: 800;
   line-height: 1.1;
   word-break: keep-all;
@@ -390,20 +390,20 @@ button {
 .departure__code {
   margin: 6px 0 0;
   color: #7a635d;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .airline-badge,
 .offer-badge {
   display: inline-flex;
   border-radius: 999px;
-  padding: 6px 11px;
-  font-size: 13px;
+  padding: 5px 10px;
+  font-size: 12px;
   font-weight: 800;
 }
 
 .airline-badge {
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .offer-badge {
@@ -412,45 +412,45 @@ button {
 }
 
 .offer-text {
-  margin: 10px 0 0;
+  margin: 8px 0 0;
   color: var(--brand);
-  font-size: clamp(16px, 2.9vw, 18px);
+  font-size: clamp(14px, 1.8vw, 16px);
   font-weight: 800;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .price-box {
   border-radius: 22px;
   background: #fffaf7;
-  padding: 14px 18px;
+  padding: 12px 14px;
   text-align: center;
 }
 
 .price-box__label {
   margin: 0;
   color: #8a6d67;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .price-box__value {
-  margin: 8px 0 0;
-  font-size: clamp(20px, 3.3vw, 26px);
+  margin: 6px 0 0;
+  font-size: clamp(16px, 2.1vw, 18px);
   font-weight: 800;
 }
 
 .cta-link {
   display: inline-flex;
-  min-height: 56px;
+  min-height: 48px;
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  padding: 14px 22px;
+  padding: 10px 16px;
   width: 100%;
   color: #fff;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
   transition: filter 0.25s ease, transform 0.25s ease;
 }
