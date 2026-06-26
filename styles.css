@@ -381,7 +381,7 @@ button {
 
 .departure__date {
   margin: 0;
-  font-size: clamp(24px, 4vw, 30px);
+  font-size: clamp(18px, 3.2vw, 26px);
   font-weight: 800;
   line-height: 1.1;
   word-break: keep-all;
@@ -397,8 +397,8 @@ button {
 .offer-badge {
   display: inline-flex;
   border-radius: 999px;
-  padding: 7px 12px;
-  font-size: 14px;
+  padding: 6px 11px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -414,9 +414,9 @@ button {
 .offer-text {
   margin: 10px 0 0;
   color: var(--brand);
-  font-size: 20px;
+  font-size: clamp(16px, 2.9vw, 18px);
   font-weight: 800;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 .price-box {
@@ -437,7 +437,7 @@ button {
 
 .price-box__value {
   margin: 8px 0 0;
-  font-size: clamp(24px, 4vw, 28px);
+  font-size: clamp(20px, 3.3vw, 26px);
   font-weight: 800;
 }
 
@@ -522,5 +522,40 @@ button {
 
   .promo-card__body {
     padding: 18px;
+  }
+
+  .departure {
+    padding: 16px;
+  }
+
+  .departure__grid {
+    gap: 10px;
+  }
+
+  .departure__date {
+    font-size: 16px;
+  }
+
+  .departure__code {
+    font-size: 13px;
+  }
+
+  .offer-text {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .price-box {
+    padding: 12px 14px;
+  }
+
+  .price-box__value {
+    font-size: 18px;
+  }
+
+  .cta-link {
+    min-height: 48px;
+    padding: 12px 16px;
+    font-size: 14px;
   }
 }
