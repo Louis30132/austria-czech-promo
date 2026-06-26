@@ -338,8 +338,8 @@ button {
 .departure {
   border: 1px solid #edd8d3;
   border-radius: 24px;
-  background: #fff;
-  padding: 18px;
+  background: var(--brand-bg, #fff);
+  padding: 16px;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
@@ -348,42 +348,73 @@ button {
 }
 
 .departure.is-selected {
-  box-shadow: var(--brand-shadow, 0 12px 28px rgba(201, 63, 49, 0.14));
+  box-shadow: var(--brand-shadow-strong, 0 16px 36px rgba(201, 63, 49, 0.18));
   border-color: var(--brand-border, #edd8d3);
-  background: var(--brand-bg, #fff);
+  background: var(--brand-bg-strong, var(--brand-bg, #fff));
 }
 
 .departure__grid {
   display: grid;
-  gap: 14px;
+  gap: 12px;
 }
 
 @media (min-width: 560px) {
   .departure__grid {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    align-items: center;
-  }
-
-  .departure__cell--cta {
-    grid-column: 2;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
   }
 }
 
 @media (min-width: 1160px) {
   .departure__grid {
-    grid-template-columns: minmax(170px, 0.95fr) minmax(150px, 0.8fr) minmax(170px, 0.85fr) minmax(112px, 132px);
+    grid-template-columns: minmax(190px, 1.05fr) minmax(150px, 0.9fr) minmax(180px, 0.95fr) minmax(120px, 140px);
   }
+}
 
-  .departure__cell--cta {
-    grid-column: auto;
-  }
+.departure__panel {
+  min-width: 0;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.82);
+  padding: 14px;
+}
+
+.departure__panel--info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.departure__panel--offer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.departure__panel--price .price-box {
+  height: 100%;
+}
+
+.departure__panel-label {
+  margin: 0;
+  color: #8a6d67;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.departure__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .departure__date {
   margin: 0;
-  font-size: clamp(16px, 2.2vw, 18px);
+  font-size: clamp(18px, 2.4vw, 22px);
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.15;
   word-break: keep-all;
 }
 
@@ -414,16 +445,19 @@ button {
 .offer-text {
   margin: 8px 0 0;
   color: var(--brand);
-  font-size: clamp(14px, 1.8vw, 16px);
+  font-size: clamp(14px, 1.9vw, 17px);
   font-weight: 800;
   line-height: 1.4;
 }
 
 .price-box {
   border-radius: 22px;
-  background: #fffaf7;
+  background: rgba(255, 250, 247, 0.95);
   padding: 12px 14px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .price-box__label {
@@ -437,22 +471,27 @@ button {
 
 .price-box__value {
   margin: 6px 0 0;
-  font-size: clamp(16px, 2.1vw, 18px);
+  font-size: clamp(18px, 2.2vw, 22px);
   font-weight: 800;
 }
 
 .cta-link {
   display: inline-flex;
-  min-height: 48px;
+  min-height: 56px;
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  padding: 10px 16px;
+  padding: 12px 18px;
   width: 100%;
   color: #fff;
   font-size: 14px;
   font-weight: 800;
   transition: filter 0.25s ease, transform 0.25s ease;
+}
+
+.departure__cell--cta {
+  display: flex;
+  align-items: stretch;
 }
 
 .cta-link:hover {
@@ -461,36 +500,44 @@ button {
 }
 
 .theme-ci {
-  --brand-bg: linear-gradient(135deg, #fff9fc, #fff0f6);
+  --brand-bg: linear-gradient(135deg, #fff6fb, #ffe7f3);
+  --brand-bg-strong: linear-gradient(135deg, #fff1f8, #ffddec);
   --brand-border: #efcade;
   --brand-shadow: 0 12px 28px rgba(179, 59, 115, 0.14);
+  --brand-shadow-strong: 0 18px 42px rgba(179, 59, 115, 0.18);
   --airline-bg: #fff0f6;
   --airline-fg: #b33b73;
   --cta-bg: #b33b73;
 }
 
 .theme-br {
-  --brand-bg: linear-gradient(135deg, #f9fffb, #edf8f1);
+  --brand-bg: linear-gradient(135deg, #f6fff9, #e4f7ea);
+  --brand-bg-strong: linear-gradient(135deg, #effdf4, #d9f0e2);
   --brand-border: #b8dcc9;
   --brand-shadow: 0 12px 28px rgba(31, 107, 69, 0.14);
+  --brand-shadow-strong: 0 18px 42px rgba(31, 107, 69, 0.18);
   --airline-bg: #edf5ef;
   --airline-fg: #1f6b45;
   --cta-bg: #1f6b45;
 }
 
 .theme-jx {
-  --brand-bg: linear-gradient(135deg, #fffaf2, #f6efe5);
+  --brand-bg: linear-gradient(135deg, #fffbf4, #f3ebde);
+  --brand-bg-strong: linear-gradient(135deg, #fff7ed, #ede1cd);
   --brand-border: #d9c7a7;
   --brand-shadow: 0 12px 28px rgba(121, 97, 61, 0.16);
+  --brand-shadow-strong: 0 18px 42px rgba(121, 97, 61, 0.2);
   --airline-bg: #f5efe6;
   --airline-fg: #79613d;
   --cta-bg: #6f5a3a;
 }
 
 .theme-other {
-  --brand-bg: #fff;
+  --brand-bg: linear-gradient(135deg, #fff9f7, #fff0ec);
+  --brand-bg-strong: linear-gradient(135deg, #fff5f1, #ffe7df);
   --brand-border: #edd8d3;
   --brand-shadow: 0 12px 28px rgba(201, 63, 49, 0.14);
+  --brand-shadow-strong: 0 18px 42px rgba(201, 63, 49, 0.18);
   --airline-bg: #fff0ec;
   --airline-fg: #c93f31;
   --cta-bg: #c93f31;
@@ -532,8 +579,12 @@ button {
     gap: 10px;
   }
 
+  .departure__panel {
+    padding: 12px;
+  }
+
   .departure__date {
-    font-size: 16px;
+    font-size: 17px;
   }
 
   .departure__code {

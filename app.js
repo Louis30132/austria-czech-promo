@@ -149,16 +149,19 @@ function renderDeparture(groupId, option, index, selectedIndex) {
   return `
     <div class="departure ${brand.theme} ${selectedIndex === index ? "is-selected" : ""}" data-group="${groupId}" data-index="${index}" tabindex="0" role="button" aria-label="${option.date} ${option.code}">
       <div class="departure__grid">
-        <div class="departure__cell departure__cell--primary">
+        <div class="departure__panel departure__panel--info">
+          <div class="departure__badges">
+            <span class="airline-badge">${brand.name}</span>
+            <span class="offer-badge">限時優惠</span>
+          </div>
           <p class="departure__date">${option.date}</p>
           <p class="departure__code">團號 ${option.code}</p>
-          <span class="airline-badge">${brand.name}</span>
         </div>
-        <div class="departure__cell">
-          <span class="offer-badge">限時優惠</span>
+        <div class="departure__panel departure__panel--offer">
+          <p class="departure__panel-label">優惠內容</p>
           <p class="offer-text">${option.offer}</p>
         </div>
-        <div class="departure__cell">
+        <div class="departure__panel departure__panel--price">
           <div class="price-box">
             <p class="price-box__label">直售價</p>
             <p class="price-box__value">${option.price}</p>
