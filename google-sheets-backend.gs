@@ -20,11 +20,6 @@ function doGet(e) {
   const action = params.action || "list";
 
   try {
-    if (action === "add") {
-      addDeparture(params);
-      return respond(params.callback, { ok: true });
-    }
-
     if (action === "list") {
       return respond(params.callback, {
         ok: true,
@@ -33,17 +28,7 @@ function doGet(e) {
       });
     }
 
-    if (action === "saveSettings") {
-      saveSettings(params);
-      return respond(params.callback, { ok: true });
-    }
-
-    if (action === "setup") {
-      setupSheet();
-      return respond(params.callback, { ok: true });
-    }
-
-    return respond(params.callback, { ok: false, message: "Unknown action." });
+    return respond(params.callback, { ok: false, message: "This endpoint is read-only." });
   } catch (error) {
     return respond(params.callback, { ok: false, message: error.message });
   }
